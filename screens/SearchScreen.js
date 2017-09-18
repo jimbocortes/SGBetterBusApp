@@ -7,13 +7,12 @@ import * as actions from '../actions';
 import CollapsibleItem from '../components/collapsible_item';
 
 class SearchScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     header: (
       <View
         style={{
-          height: 97,
-          marginTop: 20,
-          paddingTop: 14, // only for IOS to give StatusBar Space
+          height: 90,
+          paddingTop: 25, // only for IOS to give StatusBar Space
           backgroundColor: '#161823',
           justifyContent: 'center',
           alignItems: 'center'
@@ -25,38 +24,21 @@ class SearchScreen extends Component {
             color: '#fff',
             fontSize: 11,
             letterSpacing: 1.5,
-            marginTop: 12
+            marginTop: 6
           }}
         >
           NEARBY BUS STOPS
         </Text>
       </View>
     )
-  };
+  });
 
-  //   /* NEARBY BUS STOPS: */
-  // font-family: Heebo-Regular;
-  // font-size: 11px;
-  // color: #FFFFFF;
-  // letter-spacing: 1px;
-
-  // flex-start, center, flex-end, space-around, and space-between.
-  // flex-start, center, flex-end, and stretch.
-
-  state = { term: '', selected: null };
+  state = { term: 'Victoria ', selected: null };
 
   onBusStopSearchDelayed = _.debounce((term, page) => {
     console.log(`searching for ${term}`);
     this.props.searchBusStops(term, page);
   }, 800);
-
-  renderCenterComponent() {
-    return (
-      <View>
-        <Text style={{ color: 'red' }}> Hello </Text>
-      </View>
-    );
-  }
 
   componentDidMount() {
     if (this.state.term) {
@@ -83,35 +65,58 @@ class SearchScreen extends Component {
   }
 
   renderItem(item) {
-    let selectedItemData;
-
-    if (item.BusStopCode === (this.props.bus_arrivals || {}).BusStopID) {
-      if (this.state.selected === item.BusStopCode) {
-        console.log(
-          `match! ${item.BusStopCode} ${this.state.selected} ${this.props
-            .bus_arrivals.BusStopID}`
-        );
-        selectedItemData = this.props.bus_arrivals;
-      }
-    }
-
-    console.log(selectedItemData);
-
     return (
-      <CollapsibleItem
-        item={item}
-        selectedItem={this.state.selected}
-        selectedItemData={selectedItemData}
-        onSelect={item => this.selectItem(item)}
-      />
+      <View
+        key={item.BusStopCode}
+        style={{ height: 75, paddingLeft: 20, justifyContent: 'center' }}
+      >
+        <Text
+          style={{
+            fontSize: 18,
+            lineHeight: 26,
+            color: '#FFF',
+            letterSpacing: 0,
+            marginBottom: 3
+          }}
+        >
+          {item.Description}
+        </Text>
+        <View style={{ flexDirection: 'row', paddingLeft: 3 }}>
+          <Icon name="ios-pin" type="ionicon" color="#FF2366" size={17} />
+          <Text style={{ fontSize: 14, color: '#A3A3A7', paddingLeft: 5 }}>
+            {item.RoadName}
+          </Text>
+        </View>
+      </View>
     );
+    // let selectedItemData;
+    //
+    // if (item.BusStopCode === (this.props.bus_arrivals || {}).BusStopID) {
+    //   if (this.state.selected === item.BusStopCode) {
+    //     console.log(
+    //       `match! ${item.BusStopCode} ${this.state.selected} ${this.props
+    //         .bus_arrivals.BusStopID}`
+    //     );
+    //     selectedItemData = this.props.bus_arrivals;
+    //   }
+    // }
+    //
+    // console.log(selectedItemData);
+    //
+    // return (
+    //   <CollapsibleItem
+    //     item={item}
+    //     selectedItem={this.state.selected}
+    //     selectedItemData={selectedItemData}
+    //     onSelect={item => this.selectItem(item)}
+    //   />
+    // );
   }
 
   renderHeader() {
     return (
       <View>
         <SearchBar
-          lightTheme
           onChangeText={term => this.onBusStopSearch(term)}
           placeholder="Search places, bus-stops, bus no."
         />
@@ -124,7 +129,7 @@ class SearchScreen extends Component {
       <View
         style={{
           height: 1,
-          backgroundColor: '#CED0CE'
+          backgroundColor: '#0E0F1A'
         }}
       />
     );
@@ -132,25 +137,28 @@ class SearchScreen extends Component {
 
   render() {
     return (
-      <View>
-        <List
-          style={{}}
-          containerStyle={{
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            height: 100,
+            backgroundColor: '#0E0F1A',
+            borderBottomWidth: 1,
             borderTopWidth: 1,
-            borderBottomWidth: 0
+            borderColor: '#212129'
           }}
-        >
-          <FlatList
-            keyboardShouldPersistTaps={'always'}
-            data={this.props.bus_stops.data}
-            renderItem={({ item }) => this.renderItem(item)}
-            keyExtractor={item => item.BusStopCode}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader()}
-            onEndReached={() => this.onEndReached()}
-            onEndReachedThreshold={1}
-          />
-        </List>
+        />
+
+        <FlatList
+          style={{ backgroundColor: '#161823' }}
+          keyboardShouldPersistTaps={'always'}
+          data={this.props.bus_stops.data}
+          renderItem={({ item }) => this.renderItem(item)}
+          keyExtractor={item => item.BusStopCode}
+          ItemSeparatorComponent={this.renderSeparator}
+          // ListHeaderComponent={this.renderHeader()}
+          onEndReached={() => this.onEndReached()}
+          onEndReachedThreshold={1}
+        />
       </View>
     );
   }

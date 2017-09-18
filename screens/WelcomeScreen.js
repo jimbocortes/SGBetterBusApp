@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
-import Collapsible from 'react-native-collapsible';
 
 const SLIDE_DATA = [
   { text: 'Welcome to SGBetterBus', color: '#03A9f4' },

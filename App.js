@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
@@ -42,17 +42,11 @@ export default class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <MainNavigator />
+        <View style={{ flex: 1 }}>
+          <StatusBar backgroundColor="blue" barStyle="light-content" />
+          <MainNavigator />
+        </View>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
