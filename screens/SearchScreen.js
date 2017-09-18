@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { List, ListItem, SearchBar, Header, Icon } from 'react-native-elements';
 import * as actions from '../actions';
@@ -9,14 +9,39 @@ import CollapsibleItem from '../components/collapsible_item';
 class SearchScreen extends Component {
   static navigationOptions = {
     header: (
-      <View style={{ height: 70 }}>
-        <Header
-          centerComponent={{ text: 'SGBetterBus', style: { color: '#fff' } }}
-          outerContainerStyles={{ backgroundColor: '#3D6DCC' }}
-        />
+      <View
+        style={{
+          height: 97,
+          marginTop: 20,
+          paddingTop: 14, // only for IOS to give StatusBar Space
+          backgroundColor: '#161823',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Image source={require('./../assets/images/header_logo.png')} />
+        <Text
+          style={{
+            color: '#fff',
+            fontSize: 11,
+            letterSpacing: 1.5,
+            marginTop: 12
+          }}
+        >
+          NEARBY BUS STOPS
+        </Text>
       </View>
     )
   };
+
+  //   /* NEARBY BUS STOPS: */
+  // font-family: Heebo-Regular;
+  // font-size: 11px;
+  // color: #FFFFFF;
+  // letter-spacing: 1px;
+
+  // flex-start, center, flex-end, space-around, and space-between.
+  // flex-start, center, flex-end, and stretch.
 
   state = { term: '', selected: null };
 
@@ -24,6 +49,14 @@ class SearchScreen extends Component {
     console.log(`searching for ${term}`);
     this.props.searchBusStops(term, page);
   }, 800);
+
+  renderCenterComponent() {
+    return (
+      <View>
+        <Text style={{ color: 'red' }}> Hello </Text>
+      </View>
+    );
+  }
 
   componentDidMount() {
     if (this.state.term) {
