@@ -8,6 +8,9 @@ import CollapsibleItem from '../components/collapsible_item';
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="ios-pin" type="ionicon" color={tintColor} />
+    ),
     header: (
       <View
         style={{
@@ -27,7 +30,7 @@ class SearchScreen extends Component {
             marginTop: 6
           }}
         >
-          NEARBY BUS STOPS
+          SEARCH BUS STOPS
         </Text>
       </View>
     )

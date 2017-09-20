@@ -16,10 +16,10 @@ export default class App extends React.Component {
         welcome: { screen: WelcomeScreen },
         main: {
           screen: TabNavigator({
-            search: {
+            nearbys: {
               screen: StackNavigator({
-                search: {
-                  screen: SearchScreen
+                nearby: {
+                  screen: NearbyScreen
                 }
               })
             },
@@ -34,6 +34,7 @@ export default class App extends React.Component {
         }
       },
       {
+        lazy: true,
         navigationOptions: {
           tabBarVisible: false
         }
