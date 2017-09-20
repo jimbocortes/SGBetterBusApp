@@ -1,4 +1,4 @@
-import { SEARCH_BUS_STOPS } from '../actions/types';
+import { SEARCH_BUS_STOPS, NEARBY_BUS_STOPS } from '../actions/types';
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -14,6 +14,8 @@ export default function(state = {}, action) {
       } else {
         return payload;
       }
+    case NEARBY_BUS_STOPS:
+      return { ...state, nearby: action.payload };
     default:
       return state;
   }

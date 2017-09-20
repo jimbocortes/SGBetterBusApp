@@ -62,22 +62,22 @@ class NearbyScreen extends Component {
   };
 
   componentWillMount() {
-    console.log('mounting in nearby');
+    console.log('<componentWillMount');
+    console.log('<componentWillMount>');
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage:
           'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
       });
     } else {
-      this._getLocationAsync();
+      this.props.fetchCurrentLocation();
     }
   }
 
   componentDidMount() {
-    this.props.fetchCurrentLocation();
-    if (this.state.term) {
-      this.onBusStopSearchDelayed(this.state.term);
-    }
+    // if (this.state.term) {
+    //   this.onBusStopSearchDelayed(this.state.term);
+    // }
   }
 
   onBusStopSearch(term) {
@@ -96,6 +96,30 @@ class NearbyScreen extends Component {
   selectItem(item) {
     this.setState({ selected: item.BusStopCode });
     this.props.fetchBusArrival(item.BusStopCode);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('<componentWillReceiveProps');
+    console.log(nextProps.current_location);
+    console.log(this.props.current_location);
+
+    const newLocation = nextProps.current_location;
+    const location = this.props.current_location;
+
+    if (newLocation.latitude === null || newLocation.long === null) {
+      console.log('no loc yet');
+      return;
+    }
+
+    if (
+      newLocation.latitude !== location.latitude ||
+      newLocation.longitude !== location.longitude
+    ) {
+      this.props.nearbyBusStops(newLocation);
+    } else {
+      console.log('loc has not changed');
+    }
+    console.log('componentWillReceiveProps>');
   }
 
   renderItem(item) {
@@ -180,12 +204,20 @@ class NearbyScreen extends Component {
             borderTopWidth: 1,
             borderColor: '#212129'
           }}
-        />
+        >
+          <Text style={{ color: 'white' }}>
+            {this.props.current_location.longitude}
+          </Text>
+
+          <Text style={{ color: 'white' }}>
+            {this.props.current_location.latitude}
+          </Text>
+        </View>
 
         <FlatList
           style={{ backgroundColor: '#161823' }}
           keyboardShouldPersistTaps={'always'}
-          data={this.props.bus_stops.data}
+          data={this.props.bus_stops.nearby}
           renderItem={({ item }) => this.renderItem(item)}
           keyExtractor={item => item.BusStopCode}
           ItemSeparatorComponent={this.renderSeparator}
@@ -198,10 +230,11 @@ class NearbyScreen extends Component {
   }
 }
 
-function mapStateToProps(
-  { bus_stops, bus_arrivals, current_location },
-  ownProps
-) {
+function mapStateToProps({ bus_stops, bus_arrivals, current_location }) {
+  console.log('<mapStateToProps');
+  console.log(current_location);
+  console.log(bus_stops);
+  console.log('mapStateToProps>');
   return { bus_stops, bus_arrivals, current_location };
 }
 
