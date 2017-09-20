@@ -123,26 +123,63 @@ class NearbyScreen extends Component {
   }
 
   renderItem(item) {
+    const distance = +item.Location.distance.toFixed(2); // round off two decimal places
+
     return (
       <View
-        key={item.BusStopCode}
-        style={{ height: 75, paddingLeft: 20, justifyContent: 'center' }}
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}
       >
-        <Text
+        <View
+          key={item.BusStopCode}
           style={{
-            fontSize: 18,
-            lineHeight: 26,
-            color: '#FFF',
-            letterSpacing: 0,
-            marginBottom: 3
+            height: 75,
+            paddingLeft: 20,
+            justifyContent: 'center'
           }}
         >
-          {item.Description}
-        </Text>
-        <View style={{ flexDirection: 'row', paddingLeft: 3 }}>
-          <Icon name="ios-pin" type="ionicon" color="#FF2366" size={17} />
-          <Text style={{ fontSize: 14, color: '#A3A3A7', paddingLeft: 5 }}>
-            {item.RoadName}
+          <Text
+            style={{
+              fontSize: 18,
+              lineHeight: 26,
+              color: '#FFF',
+              letterSpacing: 0,
+              marginBottom: 3
+            }}
+          >
+            {item.Description}
+          </Text>
+          <View style={{ flexDirection: 'row', paddingLeft: 3 }}>
+            <Icon name="ios-pin" type="ionicon" color="#FF2366" size={17} />
+            <Text
+              style={{
+                fontSize: 14,
+                color: '#A3A3A7',
+                paddingLeft: 5
+              }}
+            >
+              {`(${distance} km) ${item.RoadName}`}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            height: 75,
+            justifyContent: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#FFF',
+              marginRight: 15
+            }}
+          >
+            {`${distance} km`}{' '}
           </Text>
         </View>
       </View>
