@@ -74,6 +74,7 @@ class NearbyScreen extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchCurrentLocation();
     if (this.state.term) {
       this.onBusStopSearchDelayed(this.state.term);
     }
@@ -197,8 +198,11 @@ class NearbyScreen extends Component {
   }
 }
 
-function mapStateToProps({ bus_stops, bus_arrivals }, ownProps) {
-  return { bus_stops, bus_arrivals };
+function mapStateToProps(
+  { bus_stops, bus_arrivals, current_location },
+  ownProps
+) {
+  return { bus_stops, bus_arrivals, current_location };
 }
 
 export default connect(mapStateToProps, actions)(NearbyScreen);
