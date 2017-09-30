@@ -13,7 +13,12 @@ export const fetchCurrentLocation = () => async dispatch => {
       console.log('<fetchCurrentLocation');
       console.log(location);
       console.log('fetchCurrentLocation>');
+
       const { latitude, longitude } = location.coords;
+      // const { latitude, longitude } = {
+      //   latitude: 1.3499760598860455,
+      //   longitude: 103.74675391120903
+      // };
 
       dispatch({
         type: FETCH_CURRENT_LOCATION,

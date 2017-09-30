@@ -41,12 +41,9 @@ class NearbyScreen extends Component {
     term: 'Victoria ',
     selected: null,
     location: null,
-    errorMessage: null
+    errorMessage: null,
+    refreshing: false
   };
-
-  onBusStopSearchDelayed = _.debounce((term, page) => {
-    this.props.searchBusStops(term, page);
-  }, 800);
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -74,28 +71,12 @@ class NearbyScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    // if (this.state.term) {
-    //   this.onBusStopSearchDelayed(this.state.term);
-    // }
-  }
-
-  onBusStopSearch(term) {
-    this.setState({ term });
-    this.onBusStopSearchDelayed(term);
-  }
-
   onEndReached() {
     if (this.props.bus_stops.currentPage < this.props.bus_stops.totaPages) {
       console.log('pagination has been fired');
       const page = this.props.bus_stops.currentPage + 1;
       this.onBusStopSearchDelayed(this.state.term, page);
     }
-  }
-
-  selectItem(item) {
-    this.setState({ selected: item.BusStopCode });
-    this.props.fetchBusArrival(item.BusStopCode);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -115,9 +96,13 @@ class NearbyScreen extends Component {
       newLocation.latitude !== location.latitude ||
       newLocation.longitude !== location.longitude
     ) {
+      console.log('~location has changed');
+      this.setState({ refreshing: true });
+      console.log('~fetching nearby bus stops');
       this.props.nearbyBusStops(newLocation);
     } else {
-      console.log('loc has not changed');
+      console.log('~location has not changed');
+      this.setState({ refreshing: false });
     }
     console.log('componentWillReceiveProps>');
   }
@@ -161,7 +146,7 @@ class NearbyScreen extends Component {
                 paddingLeft: 5
               }}
             >
-              {`(${distance} km) ${item.RoadName}`}
+              {item.RoadName}
             </Text>
           </View>
         </View>
@@ -184,28 +169,6 @@ class NearbyScreen extends Component {
         </View>
       </View>
     );
-    // let selectedItemData;
-    //
-    // if (item.BusStopCode === (this.props.bus_arrivals || {}).BusStopID) {
-    //   if (this.state.selected === item.BusStopCode) {
-    //     console.log(
-    //       `match! ${item.BusStopCode} ${this.state.selected} ${this.props
-    //         .bus_arrivals.BusStopID}`
-    //     );
-    //     selectedItemData = this.props.bus_arrivals;
-    //   }
-    // }
-    //
-    // console.log(selectedItemData);
-    //
-    // return (
-    //   <CollapsibleItem
-    //     item={item}
-    //     selectedItem={this.state.selected}
-    //     selectedItemData={selectedItemData}
-    //     onSelect={item => this.selectItem(item)}
-    //   />
-    // );
   }
 
   renderHeader() {
@@ -229,6 +192,12 @@ class NearbyScreen extends Component {
       />
     );
   };
+
+  onRefresh() {
+    console.log('<onRefresh');
+    this.props.fetchCurrentLocation();
+    console.log('onRefresh>');
+  }
 
   render() {
     return (
@@ -259,6 +228,8 @@ class NearbyScreen extends Component {
           keyExtractor={item => item.BusStopCode}
           ItemSeparatorComponent={this.renderSeparator}
           // ListHeaderComponent={this.renderHeader()}
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
           onEndReached={() => this.onEndReached()}
           onEndReachedThreshold={1}
         />
