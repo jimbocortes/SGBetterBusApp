@@ -10,7 +10,10 @@ import CollapsibleItem from '../components/collapsible_item';
 class NearbyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="ios-pin" type="ionicon" color={tintColor} />
+      <Image
+        source={require('../assets/icons/nearby.png')}
+        style={{ tintColor: tintColor }}
+      />
     ),
     header: (
       <View
@@ -79,6 +82,7 @@ class NearbyScreen extends Component {
       this.props.nearbyBusStops(newLocation);
     } else {
       console.log('~location has not changed');
+      console.log('~refreshing false');
       this.setState({ refreshing: false });
     }
     console.log('componentWillReceiveProps>');
