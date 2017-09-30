@@ -71,14 +71,6 @@ class NearbyScreen extends Component {
     }
   }
 
-  onEndReached() {
-    if (this.props.bus_stops.currentPage < this.props.bus_stops.totaPages) {
-      console.log('pagination has been fired');
-      const page = this.props.bus_stops.currentPage + 1;
-      this.onBusStopSearchDelayed(this.state.term, page);
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     console.log('<componentWillReceiveProps');
     console.log(nextProps.current_location);
@@ -171,17 +163,6 @@ class NearbyScreen extends Component {
     );
   }
 
-  renderHeader() {
-    return (
-      <View>
-        <SearchBar
-          onChangeText={term => this.onBusStopSearch(term)}
-          placeholder="Search places, bus-stops, bus no."
-        />
-      </View>
-    );
-  }
-
   renderSeparator = () => {
     return (
       <View
@@ -227,11 +208,8 @@ class NearbyScreen extends Component {
           renderItem={({ item }) => this.renderItem(item)}
           keyExtractor={item => item.BusStopCode}
           ItemSeparatorComponent={this.renderSeparator}
-          // ListHeaderComponent={this.renderHeader()}
           refreshing={this.state.refreshing}
           onRefresh={() => this.onRefresh()}
-          onEndReached={() => this.onEndReached()}
-          onEndReachedThreshold={1}
         />
       </View>
     );
