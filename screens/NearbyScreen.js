@@ -38,24 +38,9 @@ class NearbyScreen extends Component {
   });
 
   state = {
-    term: 'Victoria ',
-    selected: null,
     location: null,
     errorMessage: null,
     refreshing: false
-  };
-
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied'
-      });
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
-    this.setState({ location });
   };
 
   componentWillMount() {
@@ -200,7 +185,6 @@ class NearbyScreen extends Component {
             {this.props.current_location.latitude}
           </Text>
         </View>
-
         <FlatList
           style={{ backgroundColor: '#161823' }}
           keyboardShouldPersistTaps={'always'}
