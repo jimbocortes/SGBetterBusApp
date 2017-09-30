@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { Platform, View, Text, FlatList, Image } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import { connect } from 'react-redux';
-import { List, ListItem, SearchBar, Header, Icon } from 'react-native-elements';
+import BusListItem from '../components/bus_list_item';
 import * as actions from '../actions';
-import CollapsibleItem from '../components/collapsible_item';
 
 class NearbyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -43,7 +42,8 @@ class NearbyScreen extends Component {
   state = {
     location: null,
     errorMessage: null,
-    refreshing: false
+    refreshing: false,
+    selected: null
   };
 
   componentWillMount() {
@@ -88,67 +88,19 @@ class NearbyScreen extends Component {
     console.log('componentWillReceiveProps>');
   }
 
-  renderItem(item) {
-    const distance = +item.Location.distance.toFixed(2); // round off two decimal places
+  onPressItem(busStopCode) {
+    this.setState({ selected: busStopCode });
+  }
 
+  renderItem({ item }) {
+    const distance = +item.Location.distance.toFixed(2); // round off two decimal places
     return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        }}
-      >
-        <View
-          key={item.BusStopCode}
-          style={{
-            height: 75,
-            paddingLeft: 20,
-            justifyContent: 'center'
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              lineHeight: 26,
-              color: '#FFF',
-              letterSpacing: 0,
-              marginBottom: 3
-            }}
-          >
-            {item.Description}
-          </Text>
-          <View style={{ flexDirection: 'row', paddingLeft: 3 }}>
-            <Icon name="ios-pin" type="ionicon" color="#FF2366" size={17} />
-            <Text
-              style={{
-                fontSize: 14,
-                color: '#A3A3A7',
-                paddingLeft: 5
-              }}
-            >
-              {item.RoadName}
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            height: 75,
-            justifyContent: 'center'
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: '#FFF',
-              marginRight: 15
-            }}
-          >
-            {`${distance} km`}{' '}
-          </Text>
-        </View>
-      </View>
+      <BusListItem
+        id={item.BusStopCode}
+        onPressItem={this.onPressItem.bind(this)}
+        selected={this.state.selected === item.BusStopCode}
+        item={item}
+      />
     );
   }
 
@@ -193,7 +145,7 @@ class NearbyScreen extends Component {
           style={{ backgroundColor: '#161823' }}
           keyboardShouldPersistTaps={'always'}
           data={this.props.bus_stops.nearby}
-          renderItem={({ item }) => this.renderItem(item)}
+          renderItem={this.renderItem.bind(this)}
           keyExtractor={item => item.BusStopCode}
           ItemSeparatorComponent={this.renderSeparator}
           refreshing={this.state.refreshing}
