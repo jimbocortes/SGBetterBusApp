@@ -15,22 +15,37 @@ export default class App extends React.Component {
       {
         welcome: { screen: WelcomeScreen },
         main: {
-          screen: TabNavigator({
-            nearbys: {
-              screen: StackNavigator({
-                nearby: {
-                  screen: NearbyScreen
-                }
-              })
+          screen: TabNavigator(
+            {
+              nearbys: {
+                screen: StackNavigator({
+                  nearby: {
+                    screen: NearbyScreen
+                  }
+                })
+              },
+              pins: {
+                screen: StackNavigator({
+                  pin: {
+                    screen: PinsScreen
+                  }
+                })
+              }
             },
-            pins: {
-              screen: StackNavigator({
-                pin: {
-                  screen: PinsScreen
+            {
+              tabBarOptions: {
+                showLabel: false,
+                activeTintColor: '#FFF',
+                tabStyle: {
+                  borderTopWidth: 1,
+                  borderColor: '#2E2F38'
+                },
+                style: {
+                  backgroundColor: '#1A1B25'
                 }
-              })
+              }
             }
-          })
+          )
         }
       },
       {
