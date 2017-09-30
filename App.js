@@ -8,6 +8,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import PinsScreen from './screens/PinsScreen';
 import NearbyScreen from './screens/NearbyScreen';
 import SearchScreen from './screens/SearchScreen';
+import BusArrivalScreen from './screens/BusArrivalScreen';
 
 export default class App extends React.Component {
   render() {
@@ -21,6 +22,9 @@ export default class App extends React.Component {
                 screen: StackNavigator({
                   nearby: {
                     screen: NearbyScreen
+                  },
+                  busArrivals: {
+                    screen: BusArrivalScreen
                   }
                 })
               },
@@ -49,7 +53,6 @@ export default class App extends React.Component {
         }
       },
       {
-        lazy: true,
         navigationOptions: {
           tabBarVisible: false
         }
