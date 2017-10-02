@@ -18,7 +18,7 @@ export default class App extends React.Component {
         main: {
           screen: TabNavigator(
             {
-              nearbys: {
+              Nearby: {
                 screen: StackNavigator({
                   nearby: {
                     screen: NearbyScreen
@@ -28,7 +28,7 @@ export default class App extends React.Component {
                   }
                 })
               },
-              pins: {
+              Pins: {
                 screen: StackNavigator({
                   pin: {
                     screen: PinsScreen
@@ -38,7 +38,6 @@ export default class App extends React.Component {
             },
             {
               tabBarOptions: {
-                showLabel: false,
                 activeTintColor: '#FFF',
                 tabStyle: {
                   borderTopWidth: 1,
