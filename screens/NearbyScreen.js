@@ -25,16 +25,6 @@ class NearbyScreen extends Component {
         }}
       >
         <Image source={require('./../assets/images/header_logo.png')} />
-        <Text
-          style={{
-            color: '#fff',
-            fontSize: 11,
-            letterSpacing: 1.5,
-            marginTop: 6
-          }}
-        >
-          NEAR BUS STOPS
-        </Text>
       </View>
     )
   });
@@ -77,19 +67,19 @@ class NearbyScreen extends Component {
       newLocation.longitude !== location.longitude
     ) {
       console.log('~location has changed');
-      this.setState({ refreshing: true });
       console.log('~fetching nearby bus stops');
+
       this.props.nearbyBusStops(newLocation);
     } else {
       console.log('~location has not changed');
       console.log('~refreshing false');
-      this.setState({ refreshing: false });
     }
     console.log('componentWillReceiveProps>');
   }
 
   onPressItem(busStopCode) {
     this.setState({ selected: busStopCode });
+    this.props.navigation.navigate('busArrivals');
   }
 
   renderItem({ item }) {
