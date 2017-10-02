@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 class BusListItem extends PureComponent {
@@ -11,9 +11,10 @@ class BusListItem extends PureComponent {
   render() {
     const { item } = this.props;
     const distance = item.Location.distance.toFixed(2);
+    const subText = `B${item.BusStopCode} ${item.RoadName}`;
     return (
       <View {...this.props}>
-        <TouchableHighlight onPress={this.onPress.bind(this)}>
+        <TouchableOpacity onPress={this.onPress.bind(this)}>
           <View
             style={{
               flex: 1,
@@ -49,7 +50,7 @@ class BusListItem extends PureComponent {
                     paddingLeft: 5
                   }}
                 >
-                  {item.RoadName}
+                  {subText}
                 </Text>
               </View>
             </View>
@@ -71,7 +72,7 @@ class BusListItem extends PureComponent {
               </Text>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }
