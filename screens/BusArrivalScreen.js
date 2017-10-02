@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { View, Text, Image } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 
 class BusArrivalScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -14,21 +16,36 @@ class BusArrivalScreen extends Component {
           height: 90,
           paddingTop: 25, // only for IOS to give StatusBar Space
           backgroundColor: '#161823',
-          justifyContent: 'center',
-          alignItems: 'center'
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
-        <Image source={require('./../assets/images/header_logo.png')} />
-        <Text
+        <View style={{ flex: 1, borderWidth: 1, borderColor: 'red' }}>
+          <Icon name="sc-telegram" type="evilicon" color="#517fa4" />
+
+          <Button onPress={() => navigation.goBack()} icon={{ name: 'home' }} />
+        </View>
+
+        <View
           style={{
-            color: '#fff',
-            fontSize: 11,
-            letterSpacing: 1.5,
-            marginTop: 6
+            flex: 2,
+            borderWidth: 1,
+            borderColor: 'red',
+            alignItems: 'center'
           }}
         >
-          NEAR BUS STOPS
-        </Text>
+          <Image source={require('./../assets/images/header_logo.png')} />
+        </View>
+
+        <View style={{ flex: 1, borderWidth: 1, borderColor: 'red' }}>
+          <Icon />
+          <Button
+            onPress={() => navigation.goBack()}
+            icon={{ name: 'home' }}
+            buttonStyle={{ backgroundColor: 'red', borderRadius: 10 }}
+          />
+        </View>
       </View>
     )
   });
