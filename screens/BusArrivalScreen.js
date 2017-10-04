@@ -51,7 +51,8 @@ class BusArrivalScreen extends Component {
   });
 
   state = {
-    selected: null
+    selected: null,
+    refreshing: false
   };
 
   componentWillMount() {
@@ -80,6 +81,13 @@ class BusArrivalScreen extends Component {
     );
   }
 
+  onRefresh() {
+    const item = this.props.navigation.state.params.item;
+    console.log('<onRefresh');
+    this.props.fetchBusArrival(item.BusStopCode);
+    console.log('onRefresh>');
+  }
+
   render() {
     const { params } = this.props.navigation.state;
 
@@ -93,6 +101,7 @@ class BusArrivalScreen extends Component {
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem.bind(this)}
           refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
         />
       </View>
     );
