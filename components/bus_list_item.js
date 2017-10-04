@@ -4,14 +4,12 @@ import { Icon } from 'react-native-elements';
 
 class BusListItem extends PureComponent {
   onPress() {
-    console.log(this.props.item.BusStopCode);
+    console.log(this.props.item);
     this.props.onPressItem(this.props.item);
   }
 
   render() {
     const { item } = this.props;
-    const distance = item.Location.distance.toFixed(2);
-    const subText = `B${item.BusStopCode} ${item.RoadName}`;
     return (
       <View {...this.props}>
         <TouchableOpacity onPress={this.onPress.bind(this)}>
@@ -23,7 +21,7 @@ class BusListItem extends PureComponent {
             }}
           >
             <View
-              key={item.BusStopCode}
+              key={item.ServiceNo}
               style={{
                 height: 75,
                 paddingLeft: 20,
@@ -39,36 +37,7 @@ class BusListItem extends PureComponent {
                   marginBottom: 3
                 }}
               >
-                {item.Description}
-              </Text>
-              <View style={{ flexDirection: 'row', paddingLeft: 3 }}>
-                <Icon name="ios-pin" type="ionicon" color="#FF2366" size={17} />
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#A3A3A7',
-                    paddingLeft: 5
-                  }}
-                >
-                  {subText}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                height: 75,
-                justifyContent: 'center'
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  color: '#FFF',
-                  marginRight: 15
-                }}
-              >
-                {`${distance} km`}{' '}
+                {item.ServiceNo}
               </Text>
             </View>
           </View>
