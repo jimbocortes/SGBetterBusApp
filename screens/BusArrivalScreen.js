@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'react-native-elements';
+import BusListItem from '../components/bus_list_item';
 import * as actions from '../actions';
 
 class BusArrivalScreen extends Component {
@@ -49,16 +50,52 @@ class BusArrivalScreen extends Component {
     )
   });
 
+  state = {
+    selected: null
+  };
+
   componentWillMount() {
     const item = this.props.navigation.state.params.item;
     this.props.fetchBusArrival(item.BusStopCode);
   }
 
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          backgroundColor: '#0E0F1A'
+        }}
+      />
+    );
+  };
+
+  renderItem({ item }) {
+    return (
+      <BusListItem
+        id={item.ServiceNo}
+        selected={this.state.selected === item.ServiceNo}
+        item={item}
+      />
+    );
+  }
+
   render() {
     const { params } = this.props.navigation.state;
-    console.log(params.item);
 
-    return <View style={{ flex: 1, backgroundColor: '#0E0F1A' }} />;
+    return (
+      <View style={{ flex: 1, backgroundColor: '#0E0F1A' }}>
+        <FlatList
+          style={{ backgroundColor: '#161823' }}
+          keyboardShouldPersistTaps={'always'}
+          data={this.props.bus_arrivals}
+          keyExtractor={item => item.ServiceNo}
+          ItemSeparatorComponent={this.renderSeparator}
+          renderItem={this.renderItem.bind(this)}
+          refreshing={this.state.refreshing}
+        />
+      </View>
+    );
   }
 }
 
