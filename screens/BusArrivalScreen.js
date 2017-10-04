@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
+import { connect } from 'react-redux';
 import { Button, Icon } from 'react-native-elements';
+import * as actions from '../actions';
 
 class BusArrivalScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -38,7 +40,7 @@ class BusArrivalScreen extends Component {
           }}
         >
           <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>
-            {navigation.state.params.title}
+            {navigation.state.params.item.Description}
           </Text>
         </View>
 
@@ -47,13 +49,24 @@ class BusArrivalScreen extends Component {
     )
   });
 
+  componentWillMount() {
+    const item = this.props.navigation.state.params.item;
+    this.props.fetchBusArrival(item.BusStopCode);
+  }
+
   render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#0E0F1A' }}>
-        <Text> Hello </Text>
-      </View>
-    );
+    const { params } = this.props.navigation.state;
+    console.log(params.item);
+
+    return <View style={{ flex: 1, backgroundColor: '#0E0F1A' }} />;
   }
 }
 
-export default BusArrivalScreen;
+function mapStateToProps({ bus_arrivals }) {
+  console.log('<mapStateToProps');
+  console.log(bus_arrivals);
+  console.log('mapStateToProps>');
+  return { bus_arrivals };
+}
+
+export default connect(mapStateToProps, actions)(BusArrivalScreen);
