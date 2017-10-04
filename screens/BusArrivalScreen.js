@@ -21,31 +21,24 @@ class BusArrivalScreen extends Component {
           justifyContent: 'center'
         }}
       >
-        <View style={{ flex: 1, borderWidth: 1, borderColor: 'red' }}>
-          <Icon name="sc-telegram" type="evilicon" color="#517fa4" />
-
-          <Button onPress={() => navigation.goBack()} icon={{ name: 'home' }} />
+        <View style={{ flex: 1 }}>
+          <Button
+            onPress={() => navigation.goBack()}
+            icon={{ name: 'arrow-back' }}
+            buttonStyle={{ backgroundColor: 'transparent' }}
+          />
         </View>
 
         <View
           style={{
             flex: 2,
-            borderWidth: 1,
-            borderColor: 'red',
             alignItems: 'center'
           }}
         >
           <Image source={require('./../assets/images/header_logo.png')} />
         </View>
 
-        <View style={{ flex: 1, borderWidth: 1, borderColor: 'red' }}>
-          <Icon />
-          <Button
-            onPress={() => navigation.goBack()}
-            icon={{ name: 'home' }}
-            buttonStyle={{ backgroundColor: 'red', borderRadius: 10 }}
-          />
-        </View>
+        <View style={{ flex: 1 }} />
       </View>
     )
   });
