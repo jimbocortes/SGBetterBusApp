@@ -82,7 +82,7 @@ class NearbyScreen extends Component {
   onPressItem(busStop) {
     this.setState({ selected: busStop.BusStopCode });
     this.props.navigation.navigate('busArrivals', {
-      title: busStop.Description
+      item: busStop
     });
   }
 
