@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Platform, View, Text, FlatList, Image } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import { connect } from 'react-redux';
-import BusListItem from '../components/bus_list_item';
+import BusStopListItem from '../components/bus_stop_list_item';
 import * as actions from '../actions';
 
 class NearbyScreen extends Component {
@@ -89,7 +89,7 @@ class NearbyScreen extends Component {
   renderItem({ item }) {
     const distance = +item.Location.distance.toFixed(2); // round off two decimal places
     return (
-      <BusListItem
+      <BusStopListItem
         id={item.BusStopCode}
         onPressItem={this.onPressItem.bind(this)}
         selected={this.state.selected === item.BusStopCode}
