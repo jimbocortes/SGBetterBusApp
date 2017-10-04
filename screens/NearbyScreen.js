@@ -21,7 +21,9 @@ class NearbyScreen extends Component {
           paddingTop: 25, // only for IOS to give StatusBar Space
           backgroundColor: '#161823',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          borderBottomWidth: 1,
+          borderColor: '#212129'
         }}
       >
         <Image source={require('./../assets/images/header_logo.png')} />
@@ -77,9 +79,11 @@ class NearbyScreen extends Component {
     console.log('componentWillReceiveProps>');
   }
 
-  onPressItem(busStopCode) {
-    this.setState({ selected: busStopCode });
-    this.props.navigation.navigate('busArrivals');
+  onPressItem(busStop) {
+    this.setState({ selected: busStop.BusStopCode });
+    this.props.navigation.navigate('busArrivals', {
+      title: busStop.Description
+    });
   }
 
   renderItem({ item }) {
@@ -119,7 +123,6 @@ class NearbyScreen extends Component {
             height: 100,
             backgroundColor: '#0E0F1A',
             borderBottomWidth: 1,
-            borderTopWidth: 1,
             borderColor: '#212129'
           }}
         >

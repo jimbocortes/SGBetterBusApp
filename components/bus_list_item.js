@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 class BusListItem extends PureComponent {
   onPress() {
     console.log(this.props.item.BusStopCode);
-    this.props.onPressItem(this.props.item.BusStopCode);
+    this.props.onPressItem(this.props.item);
   }
 
   render() {

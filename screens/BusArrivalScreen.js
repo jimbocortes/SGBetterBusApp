@@ -18,7 +18,9 @@ class BusArrivalScreen extends Component {
           backgroundColor: '#161823',
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          borderBottomWidth: 1,
+          borderColor: '#212129'
         }}
       >
         <View style={{ flex: 1 }}>
@@ -35,7 +37,9 @@ class BusArrivalScreen extends Component {
             alignItems: 'center'
           }}
         >
-          <Image source={require('./../assets/images/header_logo.png')} />
+          <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>
+            {navigation.state.params.title}
+          </Text>
         </View>
 
         <View style={{ flex: 1 }} />
@@ -45,7 +49,7 @@ class BusArrivalScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, backgroundColor: '#0E0F1A' }}>
         <Text> Hello </Text>
       </View>
     );
